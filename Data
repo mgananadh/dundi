@@ -7,7 +7,7 @@ dataset_dir = '/content/train' # Corrected this line
 labels = pd.read_csv('/content/labels.csv')
 
 def make_dir(x):
-    if not os.path.exists(x):
+    if not os.path.exists(x)
         os.makedirs(x)
 
 base_dir = './subset'
