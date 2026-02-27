@@ -1,0 +1,30 @@
+import os
+import shutil
+import sys
+import pandas as pd # Added pandas import
+
+dataset_dir = '/content/train' # Corrected this line
+labels = pd.read_csv('/content/labels.csv')
+
+def make_dir(x):
+    if not os.path.exists(x):
+        os.makedirs(x)
+
+base_dir = './subset'
+make_dir(base_dir)
+
+train_dir = os.path.join(base_dir, 'train')
+make_dir(train_dir)
+
+breeds = labels.breed.unique()
+for breed in breeds:
+    #Make folder for each breed
+    breed_path = os.path.join(train_dir, breed) # Corrected variable name and assignment
+    make_dir(breed_path) # Corrected call
+
+    # Copy images to the corresponding folders
+    images = labels[labels.breed == breed]['id']
+    for image in images:
+        source = os.path.join(dataset_dir, f'{image}.jpg')
+        destination = os.path.join(breed_path, f'{image}.jpg') # Corrected path to use breed_path and removed extra space
+        shutil.copyfile(source, destination)
